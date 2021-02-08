@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Citas-Dojo</title>
+  <link href="/public/bootstrap.min.css" rel="stylesheet">
+  <script src="/public/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="/public/css/estilos.css">
+</head>
+<body>
+  <h2 class="shadow p-3 mb-5 rounded">Citando...</h2>
+
+  <div class="container cuadro-citas mt-5 shadow p-3 mb-5 rounded">
+  
+    <% for (quote of quotes) { %>
+    <h3>autor: <%= quote.author %></h3>
+    <h4 class="ms-5">cita: "<%= quote.quote %>".</h4>
+    <% } %>
+  
+    <br><a class="btn btn-outline-primary" href="/" role="button">Volver al Inicio</a>
+
+  </div>
+
+</body>
+</html>

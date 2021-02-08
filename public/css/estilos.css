@@ -1,0 +1,30 @@
+body{
+  background-image: url(/public/images/Escritos-antiguos-600x400.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+h2{
+  color:rgb(43, 43, 46);
+  font-family: "Brush Script MT";
+  font-weight: bolder;
+  font-size: 3rem;
+  background-color: navajowhite;
+}
+h3{
+  font-size: 2rem;
+  color:maroon;
+  font-family: "Comic Sans";
+}
+h4{
+  color:rgb(65, 59, 59);
+  font-size: 20px;
+  font-family: 'Times New Roman';
+  font-weight: bolder;
+}
+form, .cuadro-citas{
+  background-color: navajowhite;
+  padding: 10px;
+}
+.ms-6 {
+  margin-left: 152px !important;
+}
