@@ -28,6 +28,16 @@ router.post('/quotes', async (req, res) =>{
 router.get('/quotes', async (req, res) => {
 	const quotes = await Quote.findAll();
 	console.log(quotes);
-	res.render('quotes.ejs', {quotes: quotes});
+	let mensaje = req.flash('mensaje') ;
+  console.log(mensaje);
+	res.render('quotes.ejs', {quotes: quotes, mensaje: mensaje});
 });
+
+router.get('/eliminar/:id', async (req,res) => {
+  const quotte = await Quote.findByPk(req.params.id);
+  await quotte.destroy();
+  req.flash('mensaje', `La cita fue eliminada.`);
+  res.redirect("/quotes");
+});
+
 module.exports = router;

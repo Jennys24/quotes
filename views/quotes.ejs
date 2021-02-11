@@ -16,12 +16,21 @@
   
     <% for (quote of quotes) { %>
     <h3>autor: <%= quote.author %></h3>
-    <h4 class="ms-5">cita: "<%= quote.quote %>".</h4>
+    <h4 class="ms-5">cita: "<%= quote.quote %>".  <a href="/eliminar/<%=quote.id %>"><span>eliminar </span></a></h4>
     <% } %>
+
+    <% if (mensaje !="" ) { %>
   
+      <div class="alert alert-success ocultar">
+        <%= mensaje %>
+      </div>
+  
+    <% } %>
+
     <br><a class="btn btn-outline-primary" href="/" role="button">Volver al Inicio</a>
 
   </div>
+
 
 </body>
 </html>
