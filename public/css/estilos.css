@@ -2,6 +2,7 @@ body{
   background-image: url(/public/images/Escritos-antiguos-600x400.png);
   background-repeat: no-repeat;
   background-size: cover;
+  min-height: auto;
 }
 h2{
   color:rgb(43, 43, 46);
@@ -22,13 +23,26 @@ h4{
   font-family: 'Times New Roman';
   font-weight: bolder;
 }
-form, .cuadro-citas{
+form, .cuadro-citas, #botonera{
   background-color: navajowhite;
   padding: 10px;
+  min-width: 500px;
 }
 .ms-6 {
   margin-left: 152px !important;
 }
 span{
   font-size: 12px;
+}
+.bootbox-close-button{
+  display: none!important;
+}
+#botonera{
+  margin-top: 10px;
+  justify-content: center;
+  display: flex;
+}
+.btn{
+  padding: 5px;
+  margin: 10px;
 }

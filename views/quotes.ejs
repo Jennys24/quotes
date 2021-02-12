@@ -6,17 +6,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Citas-Dojo</title>
   <link href="/public/bootstrap.min.css" rel="stylesheet">
+  <script src="/public/jquery-3.5.1.min.js"></script>
   <script src="/public/bootstrap.bundle.min.js"></script>
   <link rel="stylesheet" href="/public/css/estilos.css">
+  <script src="/public/bootbox.min.js"></script>
+
 </head>
 <body>
   <h2 class="shadow p-3 mb-5 rounded">Citando...</h2>
 
-  <div class="container cuadro-citas mt-5 shadow p-3 mb-5 rounded">
+  <div id="citando" class="container cuadro-citas mt-5 shadow p-3 mb-5 rounded">
   
     <% for (quote of quotes) { %>
-    <h3>autor: <%= quote.author %></h3>
-    <h4 class="ms-5">cita: "<%= quote.quote %>".  <a href="/eliminar/<%=quote.id %>"><span>eliminar </span></a></h4>
+    <div>
+      <h3>autor: <%= quote.author %> </h3>
+      <h4 class="ms-5">cita: "<%= quote.quote %>".</h4>
+      <button class="btnEditar" edquote="<%=quote.id %>"><span> editar</span> </button>
+      <button class="btnEliminar" elquote="<%=quote.id %>"><span> eliminar </span></button>
+    </div>  
     <% } %>
 
     <% if (mensaje !="" ) { %>
@@ -27,10 +34,121 @@
   
     <% } %>
 
-    <br><a class="btn btn-outline-primary" href="/" role="button">Volver al Inicio</a>
+    <div class="modal" tabindex="-1" id="forms">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Creando nueva cita</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            
+            <form action="/quotes" method="POST" class="col-6 offset-3 mt-5 p-5 border-4 rounded-start shadow rounded">
+              
+              <div class="row mb-3">
+                <label for="author" class="col-sm-2 col-form-label">Autor:</label>
+                <input id="author" type="text" class="form-control" name="author" required>
+              </div><br>
+              
+              <div class="row mb-3">
+                <label for="quote" class="col-sm-2 col-form-label">Cita:</label>
+                <input id="quote" type="text" class="form-control bg-light border" name="quote" required>
+              </div><br>
 
+            </form>
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" id="reinsertando" class="btn btn-primary">Agregar cita</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+  </div>
+  
+  <div id="botonera" class="container cuadro-citas mt-5 shadow p-3 mb-5 rounded">
+    <a class="btn btn-outline-primary" href="/" role="button">Volver al Inicio</a>
+  
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#forms">
+      Crear una Cita
+    </button>
   </div>
 
+<script>
+
+  $(document).ready(function(){
+    $('.btnEliminar').on('click', function(){
+
+      let idquotte = $(this).attr("elquote");
+
+      bootbox.confirm({
+        message: "Estás seguro que deseas eliminar la cita?",
+        buttons: {
+            confirm: {
+                label: 'Si',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'No',
+                className: 'btn-danger'
+            }
+        },
+        callback: function (result) {
+          if(result==true){
+            $.get("/eliminar/" + idquotte, function(dato){
+              console.log(dato);
+              $(this).parent().remove();
+              bootbox.alert(dato.mensaje);
+            }, "json");
+          }
+        }
+      });
+      
+    });      
+    
+
+
+    $('#reinsertando').on('click', function(){
+      const author = $("#author").val();
+      const quote = $("#quote").val();
+      
+      $.post(
+        "/quotes",
+        { author, quote},
+        function(dato){
+          // cuando retorne
+          $('#citando').append(`
+            <div>
+              <h3>autor: ${author} </h3>
+              <h4 class="ms-5">cita: ${quote} </h4>
+              <button class="btnEditar" edquote="<%=quote.id %>"><span> editar</span> </button>
+              <button class="btnEliminar" elquote="<%=quote.id %>"><span> eliminar </span></button>
+            </div>
+          `);
+        }
+      );
+      
+
+      console.log(author, quote);
+    });
+
+
+
+    $('.btnEditar').on('click', function(){
+      bootbox.confirm("Haz click en OK para editar la cita", function(result){ 
+      console.log('La cita ha sido editada: ' + result); 
+      });      
+    });
+    
+  
+
+});      
+  
+  
+</script>
 
 </body>
 </html>
